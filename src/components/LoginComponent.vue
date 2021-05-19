@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import {API_URL} from "./../globals"
     import store from '../Store/Store.ts';
     export default {
         name: 'Login',
@@ -40,7 +41,7 @@
                 if(this.input.email==="" | this.input.password===""){
                     return;
                 }
-                let url = "https://localhost:44368/api/account/login";
+                let url = API_URL + "api/account/login";
                 try {
                     let obj = 
                     {
@@ -78,7 +79,7 @@
                 return;
             },
             async changepass() {
-                let url = "https://localhost:44368/api/account/password";
+                let url = API_URL + "api/account/password";
                 try {
                     let obj = 
                     {
