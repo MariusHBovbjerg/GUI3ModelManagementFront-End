@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import store from "../Store/Store.js";
+import store from "../Store/Store.ts";
 export default {
   name: "Model",
   data() {
