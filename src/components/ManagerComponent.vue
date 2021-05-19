@@ -62,6 +62,7 @@
 </template>
 
 <script>
+import {API_URL} from "./../globals"
 import store from "../Store/Store.ts";
 export default {
   name: "Manager",
@@ -84,7 +85,7 @@ export default {
     async GetManagers () {
       if (this.$store.state.LoggedIn & this.$store.state.ManagerHasChanged) {
         this.$store.commit("ManagerHasChangedFalse");
-        let url = "https://localhost:44368/api/Managers";
+        let url = API_URL + "api/Managers";
         try {
           let response = await fetch(url, {
             method: "GET",
@@ -107,7 +108,7 @@ export default {
       }
     },
     async addManager() {
-      let url = "https://localhost:44368/api/Managers";
+      let url = API_URL + "api/Managers";
       try {
         let obj = {
           firstName: this.input.firstName,
@@ -143,7 +144,7 @@ export default {
       return;
     },
     async deleteManager(id) {
-      let url = "https://localhost:44368/api/Managers/" + id;
+      let url = API_URL + "api/Managers/" + id;
       try {
         let response = await fetch(url, {
           method: "DELETE",

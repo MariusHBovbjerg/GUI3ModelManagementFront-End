@@ -72,7 +72,8 @@
 </template>
 
 <script>
-import store from "../Store/Store.ts";
+import {API_URL} from "./../globals"
+import store from "../Store/Store";
 export default {
   name: "Job",
   data() {
@@ -95,7 +96,7 @@ export default {
     async GetJobs() {
       if (this.$store.state.LoggedIn & this.$store.state.JobHasChanged) {
         this.$store.commit("JobHasChangedFalse");
-        let url = "https://localhost:44368/api/Jobs";
+        let url = API_URL + "api/Jobs";
         try {
           let response = await fetch(url, {
             method: "GET",
@@ -118,7 +119,7 @@ export default {
       }
     },
     async addJob() {
-      let url = "https://localhost:44368/api/Jobs";
+      let url = API_URL + "api/Jobs";
       try {
         let obj = {
           customer: this.input.customer,
@@ -156,7 +157,7 @@ export default {
       return;
     },
     async deleteJob(id) {
-      let url = "https://localhost:44368/api/Jobs/" + id;
+      let url = API_URL + "api/Jobs/" + id;
       try {
         let response = await fetch(url, {
           method: "DELETE",

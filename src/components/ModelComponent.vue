@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import {API_URL} from "./../globals"
 import store from "../Store/Store.ts";
 export default {
   name: "Model",
@@ -104,7 +105,7 @@ export default {
     async GetModels () {
       if (this.$store.state.LoggedIn & this.$store.state.ModelHasChanged) {
         this.$store.commit("ModelHasChangedFalse");
-        let url = "https://localhost:44368/api/Models";
+        let url = API_URL + "api/Models";
         try {
           let response = await fetch(url, {
             method: "GET",
@@ -127,7 +128,7 @@ export default {
       }
     },
     async addModel() {
-      let url = "https://localhost:44368/api/Models";
+      let url = API_URL + "api/Models";
       try {
         let obj = {
             firstName: "string",
@@ -176,7 +177,7 @@ export default {
       return;
     },
     async deleteModel(id) {
-      let url = "https://localhost:44368/api/Models/" + id;
+      let url = API_URL + "api/Models/" + id;
       try {
         let response = await fetch(url, {
           method: "DELETE",
