@@ -13,7 +13,6 @@ import JobComponent from './components/JobComponent.vue';
 import LoginComponent from './components/LoginComponent.vue';
 import ManagerComponent from './components/ManagerComponent.vue';
 import ModelComponent from './components/ModelComponent.vue';
-
 @Component({
   components: {
     LoginComponent,
