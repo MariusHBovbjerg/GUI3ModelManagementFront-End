@@ -10,13 +10,41 @@ const routes: Array<RouteConfig> = [
     name: 'Home',
     component: Home
   },
+
   {
-    path: '/about',
-    name: 'About',
+    path: '/login',
+    name: 'Login',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../components/forms/LoginForm.vue')
+  },
+
+  {
+    path: '/changepass',
+    name: 'ChangePass',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../components/forms/ChangePasswordForm.vue')
+  },
+
+  {
+    path: '/manager',
+    name: 'Manager',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../components/ManagerComponent.vue'),
+    beforeEnter: (to, from, next) => {
+      if (to.path == '/manager') {
+        if (localStorage.getItem('claim') == 'Manager') {
+          next();
+          return;
+        }
+      next('/');
+      }
+    }
   }
 ]
 

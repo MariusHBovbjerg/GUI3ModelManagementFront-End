@@ -1,16 +1,17 @@
 <template>
   <section>
-      <input v-model="form.email" type="text" />
-      <input v-model="form.password" type="password" />
-      <input v-model="form.oldPassword" type="password" />
+      <input v-model="form.email" type="text" placeholder="Email"/>
+      <input v-model="form.password" type="password" placeholder="New Password"/>
+      <input v-model="form.oldPassword" type="password" placeholder="Old Password"/>
       <button v-on:click="changePassword">Change Password</button>
   </section>
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import {API_URL} from "./../globals";
-export default defineComponent({
+import {API_URL} from "../../globals";
+import router from "../../router/index";
+export default{
+  name:"ChangePassword",
   data() {
     return {
       form: {
@@ -33,12 +34,18 @@ export default defineComponent({
           }),
         });
         if (response.ok) {
+          let claimkey =
+            "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+          let idkey =
+            "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress";
           let token = await response.json();
           localStorage.setItem("token", token.jwt);
-          //TODO Change view to some other component?
-          //success
+          let jwt = this.parseJwt(token.jwt);
+          localStorage.setItem("claim", jwt[claimkey]);
+          localStorage.setItem("id", jwt[idkey]);
+          router.push("/");
         } else {
-          console.log("Server returned: ", response.statusText);
+          console.log("Unacceptable input.");
         }
       } catch (err) {
         console.log("Error: ", err);
@@ -46,5 +53,5 @@ export default defineComponent({
       return;
     },
   },
-});
+};
 </script>

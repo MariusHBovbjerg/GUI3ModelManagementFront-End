@@ -1,6 +1,5 @@
 <template>
-  <div id="manager" v-if="this.$store.state.LoggedIn">
-    <h1>Managers</h1>
+  <div id="manager">
     <div>
       <div v-if="$store.state.AddingNewManager">
         <input
@@ -79,11 +78,17 @@ export default {
   },
   store,
   updated: function () {
-    this.$nextTick(this.GetManagers());
+    this.GetManagers();
+  },
+  created () {
+    this.GetManagers()
+  },
+  watch: {
+    '$route': 'GetManagers'
   },
   methods: {
     async GetManagers () {
-      if (this.$store.state.LoggedIn & this.$store.state.ManagerHasChanged) {
+      if (this.$store.state.ManagerHasChanged) {
         this.$store.commit("ManagerHasChangedFalse");
         let url = API_URL + "api/Managers";
         try {
