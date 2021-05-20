@@ -18,23 +18,92 @@
           placeholder="Last Name"
         />
         <input
-          required
-          type="text"
-          name="phonenumber"
-          v-model="input.phoneNo"
-          placeholder="Phone Number"
-        />
-        <input
           type="text"
           name="email"
           v-model="input.Email"
           placeholder="Email"
         />
         <input
+          required
+          type="text"
+          name="phonenumber"
+          v-model="input.PhoneNo"
+          placeholder="Phone Number"
+        />
+        <input
+          type="text"
+          name="addresLine1"
+          v-model="input.AddresLine1"
+          placeholder="AddresLine1"
+        />
+        <input
+          type="text"
+          name="addresLine2"
+          v-model="input.AddresLine2"
+          placeholder="AddresLine2"
+        />
+        <input
+          type="text"
+          name="zip"
+          v-model="input.Zip"
+          placeholder="Zip"
+        />
+        <input
+          type="text"
+          name="city"
+          v-model="input.City"
+          placeholder="City"
+        />
+        <input
+          type="text"
+          name="country"
+          v-model="input.Country"
+          placeholder="Country"
+        />
+        <input
+          type="datetime-local"
+          name="date"
+          v-model="input.BirthDate"
+        />
+        <input
+          type="text"
+          name="nationality"
+          v-model="input.Nationality"
+          placeholder="Nationality"
+        />
+        <input
+          type="number"
+          name="height"
+          v-model="input.Height"
+        />
+        <input
+          type="number"
+          name="shoeSize"
+          v-model="input.ShoeSize"
+        />
+        <input
+          type="text"
+          name="hairColor"
+          v-model="input.HairColor"
+          placeholder="Hair Color"
+        />
+        <input
+          type="text"
+          name="eyeColor"
+          v-model="input.EyeColor"
+          placeholder="Eye Color"
+        />
+        <input
+          type="text"
+          name="comments"
+          v-model="input.Comments"
+          placeholder="Comments"
+        />
+        <input
           type="password"
           name="password"
-          v-model="input.password"
-          placeholder="New Password"
+          v-model="input.Password"
+          placeholder="Password"
         />
 
 
@@ -141,25 +210,24 @@ export default {
       let url = API_URL + "api/Models";
       try {
         let obj = {
-            firstName: "string",
-            lastName: "string",
-            email: "string",
-            phoneNo: "string",
-            addresLine1: "string",
-            addresLine2: "string",
-            zip: "string",
-            city: "string",
-            country: "string",
-            birthDate: "2021-05-19T17:29:24.364Z",
-            nationality: "string",
-            height: 0,
-            shoeSize: 0,
-            hairColor: "string",
-            eyeColor: "string",
-            comments: "string",
-            password: "string"
+            firstName: this.input.FirstName,
+            lastName: this.input.LastName,
+            email: this.input.Email,
+            phoneNo: this.input.PhoneNo,
+            addresLine1: this.input.AddresLine1,
+            addresLine2: this.input.AddresLine2,
+            zip: this.input.Zip,
+            city: this.input.City,
+            country: this.input.Country,
+            birthDate: this.input.BirthDate,
+            nationality: this.input.Nationality,
+            height: this.input.Height,
+            shoeSize: this.input.ShoeSize,
+            hairColor: this.input.HairColor,
+            eyeColor: this.input.EyeColor,
+            comments: this.input.Comments,
+            password: this.input.Password
         };
-
         let response = await fetch(url, {
           method: "POST",
           body: JSON.stringify(obj), //Assumes data is in an object called form

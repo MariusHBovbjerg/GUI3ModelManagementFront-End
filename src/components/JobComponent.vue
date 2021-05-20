@@ -12,10 +12,9 @@
         />
         <input
           required
-          type="text"
+          type="datetime-local"
           name="startDate"
           v-model="input.startDate"
-          placeholder="Start Date"
         />
         <input
           required
@@ -49,6 +48,8 @@
     <div v-for="job in Jobs" :key="job.customer">
       <div>
         {{
+          "JobId: " +
+          job.efJobId +
           "Customer: " +
           job.customer +
           ". Start Date " +
@@ -63,7 +64,7 @@
           job.models
         }}
         <button type="button" v-on:click="addModelToggle()">Add Model To Job</button>
-        <button type="button" v-on:click="deleteJob(job.jobId)">
+        <button type="button" v-on:click="deleteJob(job.efJobId)">
           Delete Job
         </button>
       </div>
