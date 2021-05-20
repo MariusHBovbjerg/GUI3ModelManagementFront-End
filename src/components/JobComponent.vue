@@ -1,5 +1,5 @@
 <template>
-  <div id="job" v-if="this.$store.state.LoggedIn">
+  <div id="job">
     <h1>Jobs</h1>
     <div>
       <div v-if="$store.state.AddingNewJob">
@@ -92,9 +92,19 @@ export default {
   updated: function () {
     this.$nextTick(this.GetJobs());
   },
+  created() {
+    this.RefreshJobState();
+  },
+  watch: {
+    $route: 'RefreshJobState'
+  },
   methods: {
+    RefreshJobState() {
+      this.$store.commit("JobHasChangedTrue");
+      this.GetJobs();
+    },
     async GetJobs() {
-      if (this.$store.state.LoggedIn & this.$store.state.JobHasChanged) {
+      if (this.$store.state.JobHasChanged) {
         this.$store.commit("JobHasChangedFalse");
         let url = API_URL + "api/Jobs";
         try {

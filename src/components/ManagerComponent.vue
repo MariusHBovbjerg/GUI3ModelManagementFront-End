@@ -1,5 +1,8 @@
 <template>
   <div id="manager">
+    <h2>
+      Manager List
+    </h2>
     <div>
       <div v-if="$store.state.AddingNewManager">
         <input
@@ -61,7 +64,7 @@
 </template>
 
 <script>
-import {API_URL} from "./../globals"
+import { API_URL } from "./../globals";
 import store from "../Store/Store.ts";
 export default {
   name: "Manager",
@@ -78,16 +81,20 @@ export default {
   },
   store,
   updated: function () {
-    this.GetManagers();
+    this.$nextTick(this.GetManagers());
   },
-  created () {
-    this.GetManagers()
+  created() {
+    this.RefreshManagerState();
   },
   watch: {
-    '$route': 'GetManagers'
+    $route: 'RefreshManagerState'
   },
   methods: {
-    async GetManagers () {
+    RefreshManagerState() {
+      this.$store.commit("ManagerHasChangedTrue");
+      this.GetManagers();
+    },
+    async GetManagers() {
       if (this.$store.state.ManagerHasChanged) {
         this.$store.commit("ManagerHasChangedFalse");
         let url = API_URL + "api/Managers";

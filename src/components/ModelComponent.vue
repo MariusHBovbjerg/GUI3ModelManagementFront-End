@@ -1,5 +1,5 @@
 <template>
-  <div id="model" v-if="this.$store.state.LoggedIn">
+  <div id="model">
     <h1>Models</h1>
     <div>
       <div v-if="$store.state.AddingNewModel">
@@ -101,9 +101,19 @@ export default {
   updated: function () {
     this.$nextTick(this.GetModels());
   },
+  created() {
+    this.RefreshModelState();
+  },
+  watch: {
+    $route: 'RefreshModelState'
+  },
   methods: {
+    RefreshModelState() {
+      this.$store.commit("ModelHasChangedTrue");
+      this.GetModels();
+    },
     async GetModels () {
-      if (this.$store.state.LoggedIn & this.$store.state.ModelHasChanged) {
+      if (this.$store.state.ModelHasChanged) {
         this.$store.commit("ModelHasChangedFalse");
         let url = API_URL + "api/Models";
         try {
