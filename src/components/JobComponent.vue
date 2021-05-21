@@ -1,36 +1,41 @@
 <template>
   <div id="job">
     <h2>Jobs</h2>
-    <div>
-      <div v-if="$store.state.AddingNewJob">
-        <input
+    <div v-if="getClaim() =='Manager'">
+      <div v-if="$store.state.AddingNewJob" class="jobrow">
+        <b-form-input
+          class="text-center"
           required
           type="text"
           name="customer"
           v-model="input.customer"
           placeholder="Customer"
         />
-        <input
+        <b-form-input
+          class="text-center"
           required
           type="datetime-local"
           name="startDate"
           v-model="input.startDate"
         />
-        <input
+        <b-form-input
+          class="text-center"
           required
           type="number"
           name="days"
           v-model="input.days"
           placeholder="Days"
         />
-        <input
+        <b-form-input
+          class="text-center"
           required
           type="text"
           name="location"
           v-model="input.location"
           placeholder="Location"
         />
-        <input
+        <b-form-input
+          class="text-center"
           required
           type="text"
           name="comments"
@@ -38,58 +43,54 @@
           placeholder="Comments"
         />
 
-        <button type="button" v-on:click="addJob()">Confirm</button>
-        <button type="button" v-on:click="addJobToggle()">Cancel</button>
+        <b-button
+          class="jobbutton"
+          type="b-button cardButton"
+          v-on:click="addJob()"
+          >Confirm</b-button
+        >
+        <b-button
+          class="jobbutton"
+          type="b-button cardButton"
+          v-on:click="addJobToggle()"
+          >Cancel</b-button
+        >
       </div>
       <div v-else>
-        <button type="button" v-on:click="addJobToggle()">Add New Job</button>
+        <b-button
+          class="AddJobButton"
+          type="b-button"
+          v-on:click="addJobToggle()"
+          >Add New Job</b-button
+        >
       </div>
     </div>
-    <div v-for="job in Jobs" :key="job.efJobId">
-      <div>
-        {{
-          "JobId: " +
-          job.efJobId +
-          "Customer: " +
-          job.customer +
-          ". Start Date " +
-          job.startDate +
-          ". Duration: " +
-          job.days +
-          " days. Location: " +
-          job.location +
-          ". Comments: " +
-          job.comments +
-          ". Models" +
-          job.models
-        }}
-        <div v-if="$store.state.AddModelToJob && CurrentlyEdited == job.efJobId">
-          <div>
-            <button type="button" v-on:click="addModelToJob()">
-              Add model
-            </button>
-          </div>
-          <button type="button" v-on:click="addModelToJobToggle(null)">
-            Cancel
-          </button>
-        </div>
-        <div v-else>
-          <button type="button" v-on:click="addModelToJobToggle(job.efJobId)">
-            Add Model To Job
-          </button>
-        </div>
-        <button type="button" v-on:click="deleteJob(job.efJobId)">
-          Delete Job
-        </button>
-      </div>
-    </div>
+    <b-container>
+      <b-row>
+        <b-col sm v-for="job in Jobs" :key="job.efJobId">
+          <JobCard
+            class="jobCard"
+            :jobId="job.efJobId"
+            :comments="job.comments"
+            :customer="job.customer"
+            :days="job.days"
+            :location="job.location"
+            :startDate="job.startDate"
+            :models="job.jobModels"
+            :deleteJob="deleteJob"
+          />
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
 import { API_URL } from "./../globals";
 import store from "../Store/Store";
+import JobCard from "./cards/JobCard.vue";
 export default {
+  components: { JobCard },
   name: "Job",
   data() {
     return {
@@ -105,7 +106,7 @@ export default {
     };
   },
   store,
-  updated: function () {
+  updated: function() {
     this.GetJobs();
   },
   created() {
@@ -115,6 +116,9 @@ export default {
     $route: "RefreshJobState",
   },
   methods: {
+    getClaim(){
+      return localStorage.getItem("claim");
+    },
     RefreshJobState() {
       this.$store.commit("JobHasChangedTrue");
       this.GetJobs();
@@ -210,16 +214,27 @@ export default {
       this.$store.commit("ToggleAddJob");
       return;
     },
-    addModelToJobToggle(id) {
-      this.$store.commit("ToggleAddModelToJob");
-      this.CurrentlyEdited == id;
-      return;
-    },
   },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-</style>
+.jobCard {
+  margin: auto;
+  min-width: 20rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+.jobrow {
+  margin: auto;
+  width: 30rem;
+  margin-bottom: 1rem;
+}
 
+.jobbutton {
+  margin-top: 1rem;
+}
+.AddjobButton {
+  margin: 1rem;
+}
+</style>

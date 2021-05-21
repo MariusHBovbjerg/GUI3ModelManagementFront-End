@@ -1,2 +1,2 @@
-export const API_URL = "http://localhost:44346/"
+export const API_URL = "http://localhost:5000/"
 export default "lol"

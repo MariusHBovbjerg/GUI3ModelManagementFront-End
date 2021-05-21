@@ -2,146 +2,187 @@
   <div id="model">
     <h2>Models</h2>
     <div>
-      <div v-if="$store.state.AddingNewModel">
-        <input
+      <div v-if="$store.state.AddingNewModel" class="molrow">
+        <b-form-input
+          class="text-center molform"
           required
           type="text"
           name="Firstname"
           v-model="input.FirstName"
           placeholder="First Name"
         />
-        <input
+        <b-form-input
+          class="text-center molform"
           required
           type="text"
           name="Lastname"
           v-model="input.LastName"
           placeholder="Last Name"
         />
-        <input
+        <b-form-input
+          class="text-center molform"
           type="text"
           name="email"
           v-model="input.Email"
           placeholder="Email"
         />
-        <input
+        <b-form-input
+          class="text-center molform"
           required
           type="text"
           name="phonenumber"
           v-model="input.PhoneNo"
           placeholder="Phone Number"
         />
-        <input
+        <b-form-input
+          class="text-center molform"
           type="text"
           name="addresLine1"
           v-model="input.AddresLine1"
           placeholder="AddresLine1"
         />
-        <input
+        <b-form-input
+          class="text-center molform"
           type="text"
           name="addresLine2"
           v-model="input.AddresLine2"
           placeholder="AddresLine2"
         />
-        <input
+        <b-form-input
+          class="text-center molform"
           type="text"
           name="zip"
           v-model="input.Zip"
           placeholder="Zip"
         />
-        <input
+        <b-form-input
+          class="text-center molform"
           type="text"
           name="city"
           v-model="input.City"
           placeholder="City"
         />
-        <input
+        <b-form-input
+          class="text-center molform"
           type="text"
           name="country"
           v-model="input.Country"
           placeholder="Country"
         />
-        <input
+        <b-form-input
+          class="text-center molform"
           type="datetime-local"
           name="date"
           v-model="input.BirthDate"
         />
-        <input
+        <b-form-input
+          class="text-center molform"
           type="text"
           name="nationality"
           v-model="input.Nationality"
           placeholder="Nationality"
         />
-        <input
+        <b-form-input
+          class="text-center molform"
           type="number"
           name="height"
           v-model="input.Height"
         />
-        <input
+        <b-form-input
+          class="text-center molform"
           type="number"
           name="shoeSize"
           v-model="input.ShoeSize"
         />
-        <input
+        <b-form-input
+          class="text-center molform"
           type="text"
           name="hairColor"
           v-model="input.HairColor"
           placeholder="Hair Color"
         />
-        <input
+        <b-form-input
+          class="text-center molform"
           type="text"
           name="eyeColor"
           v-model="input.EyeColor"
           placeholder="Eye Color"
         />
-        <input
+        <b-form-input
+          class="text-center molform"
           type="text"
           name="comments"
           v-model="input.Comments"
           placeholder="Comments"
         />
-        <input
+        <b-form-input
+          class="text-center molform"
           type="password"
           name="password"
           v-model="input.Password"
           placeholder="Password"
         />
 
-
-        <button type="button" v-on:click="addModel()">Confirm</button>
-        <button type="button" v-on:click="addModelToggle()">Cancel</button>
+        <b-button class="manbutton" type="b-button" v-on:click="addModel()"
+          >Confirm</b-button
+        >
+        <b-button
+          class="manbutton"
+          type="b-button"
+          v-on:click="addModelToggle()"
+          >Cancel</b-button
+        >
       </div>
       <div v-else>
-        <button type="button" v-on:click="addModelToggle()">
+        <b-button
+          class="AddManButton"
+          type="b-button"
+          v-on:click="addModelToggle()"
+        >
           Add New Model
-        </button>
+        </b-button>
       </div>
     </div>
-    <div v-for="model in this.Models" :key="model.firstName">
-      <div>
-        {{
-          model.firstName +
-          " " +
-          model.lastName +
-          " email: " +
-          model.email +
-          " Model id: " +
-          model.efModelId +
-          " Account id: " +
-          model.efAccountId
-        }}
-        <button type="button" v-on:click="deleteModel(model.efModelId)">
-          Delete Model
-        </button>
-      </div>
-    </div>
+    <b-container>
+      <b-row>
+        <b-col v-for="model in this.Models" :key="model.firstName">
+          <ModelCard
+            class="molCard"
+            :efModelId="model.efModelId"
+            :efAccountId="model.efAccountId"
+            :account="model.account"
+            :firstName="model.firstName"
+            :lastName="model.lastName"
+            :email="model.email"
+            :phoneNo="model.phoneNo"
+            :addresLine1="model.addresLine1"
+            :zip="model.zip"
+            :city="model.city"
+            :country="model.country"
+            :birthDate="model.birthDate"
+            :nationality="model.nationality"
+            :height="model.height"
+            :shoeSize="model.shoeSize"
+            :hairColor="model.hairColor"
+            :eyeColor="model.eyeColor"
+            :comments="model.comments"
+            :Jobs="model.jobModels"
+            :Expenses="model.Expenses"
+            :deleteModel="deleteModel"
+          />
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
-import {API_URL} from "./../globals"
+import { API_URL } from "./../globals";
 import store from "../Store/Store.ts";
+import ModelCard from "./cards/ModelCard.vue";
 export default {
   name: "Model",
+  components: { ModelCard },
   data() {
     return {
       input: {
@@ -161,27 +202,27 @@ export default {
         HairColor: "",
         EyeColor: "",
         Comments: "",
-        Password: ""
+        Password: "",
       },
       Models: [],
     };
   },
   store,
-  updated: function () {
+  updated: function() {
     this.GetModels();
   },
   created() {
     this.RefreshModelState();
   },
   watch: {
-    $route: 'RefreshModelState'
+    $route: "RefreshModelState",
   },
   methods: {
     RefreshModelState() {
       this.$store.commit("ModelHasChangedTrue");
       this.GetModels();
     },
-    async GetModels () {
+    async GetModels() {
       if (this.$store.state.ModelHasChanged) {
         this.$store.commit("ModelHasChangedFalse");
         let url = API_URL + "api/Models";
@@ -210,23 +251,23 @@ export default {
       let url = API_URL + "api/Models";
       try {
         let obj = {
-            firstName: this.input.FirstName,
-            lastName: this.input.LastName,
-            email: this.input.Email,
-            phoneNo: this.input.PhoneNo,
-            addresLine1: this.input.AddresLine1,
-            addresLine2: this.input.AddresLine2,
-            zip: this.input.Zip,
-            city: this.input.City,
-            country: this.input.Country,
-            birthDate: this.input.BirthDate,
-            nationality: this.input.Nationality,
-            height: this.input.Height,
-            shoeSize: this.input.ShoeSize,
-            hairColor: this.input.HairColor,
-            eyeColor: this.input.EyeColor,
-            comments: this.input.Comments,
-            password: this.input.Password
+          firstName: this.input.FirstName,
+          lastName: this.input.LastName,
+          email: this.input.Email,
+          phoneNo: this.input.PhoneNo,
+          addresLine1: this.input.AddresLine1,
+          addresLine2: this.input.AddresLine2,
+          zip: this.input.Zip,
+          city: this.input.City,
+          country: this.input.Country,
+          birthDate: this.input.BirthDate,
+          nationality: this.input.Nationality,
+          height: this.input.Height,
+          shoeSize: this.input.ShoeSize,
+          hairColor: this.input.HairColor,
+          eyeColor: this.input.EyeColor,
+          comments: this.input.Comments,
+          password: this.input.Password,
         };
         let response = await fetch(url, {
           method: "POST",
@@ -286,7 +327,23 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-</style>
+.molCard {
+  margin: auto;
+  min-width: 15rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+.molrow {
+  margin: auto;
+  width: 30rem;
+  margin-bottom: 1rem;
+}
 
+.molbutton {
+  margin-top: 1rem;
+}
+.AddmolButton {
+  margin: 1rem;
+}
+</style>

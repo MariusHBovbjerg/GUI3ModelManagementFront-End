@@ -12,7 +12,6 @@ import ManagerComponent from '../components/ManagerComponent';
 import ModelComponent from '../components/ModelComponent';
 import JobComponent from '../components/JobComponent';
 export default {
-  name: 'Home',
   components: {
       ManagerComponent,
       ModelComponent,

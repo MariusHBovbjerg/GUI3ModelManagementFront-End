@@ -4,70 +4,85 @@
       Manager List
     </h2>
     <div>
-      <div v-if="$store.state.AddingNewManager">
-        <input
+      <div v-if="$store.state.AddingNewManager" class="manform">
+        <b-form-input
+          class="text-center"
           required
           type="text"
           name="Firstname"
           v-model="input.firstName"
           placeholder="First Name"
         />
-        <input
+        <b-form-input
+          class="text-center"
           required
           type="text"
           name="Lastname"
           v-model="input.lastName"
           placeholder="Last Name"
         />
-        <input
+        <b-form-input
+          class="text-center"
           required
           type="text"
           name="email"
           v-model="input.email"
           placeholder="Email"
         />
-        <input
+        <b-form-input
+          class="text-center"
           required
           type="password"
           name="password"
           v-model="input.password"
           placeholder="New Password"
         />
-        <button type="button" v-on:click="addManager()">Confirm</button>
-        <button type="button" v-on:click="addManagerToggle()">Cancel</button>
+        <b-button class="manbutton" type="b-button" v-on:click="addManager()"
+          >Confirm</b-button
+        >
+        <b-button
+          class="manbutton"
+          type="b-button"
+          v-on:click="addManagerToggle()"
+          >Cancel</b-button
+        >
       </div>
       <div v-else>
-        <button type="button" v-on:click="addManagerToggle()">
+        <b-button
+          class="AddManButton"
+          type="b-button"
+          v-on:click="addManagerToggle()"
+        >
           Add New Manager
-        </button>
+        </b-button>
       </div>
     </div>
-    <div v-for="manager in Managers" :key="manager.firstName">
-      <div>
-        {{
-          manager.firstName +
-          " " +
-          manager.lastName +
-          " email: " +
-          manager.email +
-          " manager id: " +
-          manager.efManagerId +
-          " Account id: " +
-          manager.efAccountId
-        }}
-        <button type="button" v-on:click="deleteManager(manager.efManagerId)">
-          Delete Manager
-        </button>
-      </div>
-    </div>
+    <b-container>
+      <b-row>
+        <b-col sm v-for="manager in Managers" :key="manager.firstName">
+          <ManagerCard
+            class="manCard"
+            :efManagerId="manager.efManagerId"
+            :efAccountId="manager.efAccountId"
+            :account="manager.account"
+            :firstName="manager.firstName"
+            :lastName="manager.lastName"
+            :email="manager.email"
+            :deleteManager="deleteManager"
+          />
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
 import { API_URL } from "./../globals";
 import store from "../Store/Store.ts";
+import ManagerCard from "./cards/ManagerCard.vue";
 export default {
   name: "Manager",
+  components: { ManagerCard },
   data() {
     return {
       input: {
@@ -80,14 +95,14 @@ export default {
     };
   },
   store,
-  updated: function () {
+  updated: function() {
     this.GetManagers();
   },
   created() {
     this.RefreshManagerState();
   },
   watch: {
-    $route: 'RefreshManagerState'
+    $route: "RefreshManagerState",
   },
   methods: {
     RefreshManagerState() {
@@ -187,7 +202,23 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-</style>
+.manCard {
+  margin: auto;
+  min-width: 15rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+.manform {
+  width: 30rem;
+  margin: auto;
+  margin-bottom: 1rem;
+}
 
+.manbutton {
+  margin-top: 1rem;
+}
+.AddManButton {
+  margin: 1rem;
+}
+</style>

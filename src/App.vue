@@ -1,21 +1,17 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link>
-
-
-
-      <span v-if="getClaim() == 'Manager'"> | </span>
       <router-link v-if="getClaim() == 'Manager'" to="/manager">Manager Page</router-link>
-      <span> | </span>
+      <router-link v-else-if="getClaim() == 'Model'" to="/model">Model Page</router-link>
+      <span v-if="isLoggedIn()"> | </span>
 
 
       <router-link v-if="!isLoggedIn()" to="/login">Log in</router-link>
 
       <span v-else>
         <router-link to="/changepass">Change Password</router-link> 
-        <span v-if="isLoggedIn()"> | </span>
-        <a class="nav"  v-on:click="logout()">Log Out</a>
+        <span v-if="isLoggedIn()"> | <a v-on:click="logout()">Log Out</a> </span>
+        
       </span>
 
     </div>
@@ -23,10 +19,9 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import router from './router/index';
-import VueRouter from 'vue-router';
-const { isNavigationFailure, NavigationFailureType } = VueRouter
+const { isNavigationFailure, NavigationFailureType } = router
 export default {
   name: "app",
   methods:{
@@ -37,6 +32,9 @@ export default {
       localStorage.removeItem('token');
       localStorage.removeItem('claim');
       localStorage.removeItem('id');
+      if(localStorage.getItem('modelid')){
+        localStorage.removeItem("modelid");
+      }
       this.$forceUpdate();
       router.push("/").catch(failure =>{
         if(isNavigationFailure(failure,NavigationFailureType.duplicated)){
@@ -54,12 +52,13 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Courier New', Courier, monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 }
+
 #nav {
   padding: 30px;
 }

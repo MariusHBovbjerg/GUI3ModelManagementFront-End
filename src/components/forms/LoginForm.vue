@@ -1,8 +1,23 @@
 <template>
-  <section>
-    <input v-model="form.email" type="text" placeholder="Email"/>
-    <input v-model="form.password" type="password" placeholder="Password"/>
-    <button v-on:click="login">Log in</button>
+  <section class="loginform">
+    <p>Please enter your email and password to login</p>
+    <b-form-input
+      :state="emailState"
+      v-on:update="emailState=null"
+      class="text-center"
+      v-model="form.email"
+      type="text"
+      placeholder="Email"
+    />
+    <b-form-input
+      :state="passwordState"
+      class="text-center"
+      v-on:update="passwordState=null"
+      v-model="form.password"
+      type="password"
+      placeholder="Password"
+    />
+    <b-button class="loginbutton" v-on:click="login">Log in</b-button>
   </section>
 </template>
 
@@ -10,8 +25,8 @@
 import { API_URL } from "../../globals";
 import router from "../../router/index";
 
-export default{
-  name:"Login",
+export default {
+  name: "Login",
   data() {
     return {
       form: {
@@ -19,11 +34,15 @@ export default{
         password: "",
         oldPassword: "",
       },
+      emailState:null,
+      passwordState:null
     };
   },
   methods: {
     async login() {
       if ((this.form.email === "") | (this.form.password === "")) {
+        this.emailState=false;
+        this.passwordState=false;
         return;
       }
       let url = API_URL + "api/Account/login";
@@ -45,8 +64,19 @@ export default{
           let jwt = this.parseJwt(token.jwt);
           localStorage.setItem("claim", jwt[claimkey]);
           localStorage.setItem("id", jwt[idkey]);
-          router.push("/");
+          localStorage.setItem("modelid", jwt["ModelId"]);
+          if(jwt[claimkey]=="Manager"){
+            
+          router.push("/manager");
+          return;
+          }else if(jwt[claimkey]=="Model"){
+          
+          router.push("/model");
+          return;
+          }
         } else {
+          this.emailState=false;
+          this.passwordState=false;
           console.log("Invalid Password.");
         }
       } catch (err) {
@@ -60,7 +90,7 @@ export default{
       var jsonPayload = decodeURIComponent(
         atob(base64)
           .split("")
-          .map(function (c) {
+          .map(function(c) {
             return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
           })
           .join("")
@@ -71,3 +101,16 @@ export default{
   },
 };
 </script>
+
+<style scoped>
+.loginform {
+  width: 30rem;
+  margin: auto;
+  margin-top: -1rem;
+  margin-bottom: 0.5rem;
+}
+
+.loginbutton {
+  margin: 0.5rem;
+}
+</style>

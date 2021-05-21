@@ -4,20 +4,20 @@
         <h1>Welcome!</h1>
         <div>
 
-            <input required type="text" name="email" v-model="input.email" placeholder="Email" />
-            <input required type="password" name="password" v-model="input.password" placeholder="New Password" />
-            <input required type="password" name="oldpassword" v-model="input.oldpassword" placeholder="Old Password" />
-            <button type="button" v-on:click="changepass()">Change Password</button>
+            <b-form-input required type="text" name="email" v-model="input.email" placeholder="Email" />
+            <b-form-input required type="password" name="password" v-model="input.password" placeholder="New Password" />
+            <b-form-input required type="password" name="oldpassword" v-model="input.oldpassword" placeholder="Old Password" />
+            <b-button type="b-button" v-on:click="changepass()">Change Password</b-button>
         </div>
         <div>
-            <button type="button" v-on:click="logout()">Logout</button>
+            <b-button type="b-button" v-on:click="logout()">Logout</b-button>
         </div>
     </div>
     <div id="login" v-else>
         <h1>Login</h1>
-        <input required type="text" name="email" v-model="input.email" placeholder="Email" />
-        <input required type="password" name="password" v-model="input.password" placeholder="Password" />
-        <input type="submit" v-on:click="login()" placeholder="Login"/>
+        <b-form-input required type="text" name="email" v-model="input.email" placeholder="Email" />
+        <b-form-input required type="password" name="password" v-model="input.password" placeholder="Password" />
+        <b-form-input type="submit" v-on:click="login()" placeholder="Login"/>
     </div>
 </template>
 
