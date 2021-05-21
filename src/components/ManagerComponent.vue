@@ -33,7 +33,7 @@
           v-model="input.password"
           placeholder="New Password"
         />
-        <button type="button" v-on:click="addManager()">Add</button>
+        <button type="button" v-on:click="addManager()">Confirm</button>
         <button type="button" v-on:click="addManagerToggle()">Cancel</button>
       </div>
       <div v-else>
@@ -81,7 +81,7 @@ export default {
   },
   store,
   updated: function () {
-    this.$nextTick(this.GetManagers());
+    this.GetManagers();
   },
   created() {
     this.RefreshManagerState();

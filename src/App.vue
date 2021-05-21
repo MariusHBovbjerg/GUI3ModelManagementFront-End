@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import router from './router/index';
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
 const { isNavigationFailure, NavigationFailureType } = VueRouter
 export default {
   name: "app",

@@ -1,6 +1,6 @@
 <template>
   <div id="model">
-    <h1>Models</h1>
+    <h2>Models</h2>
     <div>
       <div v-if="$store.state.AddingNewModel">
         <input
@@ -107,7 +107,7 @@
         />
 
 
-        <button type="button" v-on:click="addModel()">Add</button>
+        <button type="button" v-on:click="addModel()">Confirm</button>
         <button type="button" v-on:click="addModelToggle()">Cancel</button>
       </div>
       <div v-else>
@@ -168,7 +168,7 @@ export default {
   },
   store,
   updated: function () {
-    this.$nextTick(this.GetModels());
+    this.GetModels();
   },
   created() {
     this.RefreshModelState();

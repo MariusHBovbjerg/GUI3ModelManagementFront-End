@@ -13,6 +13,7 @@ const store = new Vuex.Store({
     ModelHasChanged: true,
     AddingNewJob: false,
     JobHasChanged: true,
+    AddModelToJob: false,
   },
   mutations: {
     login(state) {
@@ -40,6 +41,13 @@ const store = new Vuex.Store({
         state.AddingNewJob = false;
       } else {
         state.AddingNewJob = true;
+      }
+    },
+    ToggleAddModelToJob(state) {
+      if (state.AddModelToJob) {
+        state.AddModelToJob = false;
+      } else {
+        state.AddModelToJob = true;
       }
     },
 

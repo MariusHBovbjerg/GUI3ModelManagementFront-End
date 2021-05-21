@@ -1,6 +1,6 @@
 <template>
   <div id="job">
-    <h1>Jobs</h1>
+    <h2>Jobs</h2>
     <div>
       <div v-if="$store.state.AddingNewJob">
         <input
@@ -38,14 +38,14 @@
           placeholder="Comments"
         />
 
-        <button type="button" v-on:click="addJob()">Add</button>
+        <button type="button" v-on:click="addJob()">Confirm</button>
         <button type="button" v-on:click="addJobToggle()">Cancel</button>
       </div>
       <div v-else>
         <button type="button" v-on:click="addJobToggle()">Add New Job</button>
       </div>
     </div>
-    <div v-for="job in Jobs" :key="job.customer">
+    <div v-for="job in Jobs" :key="job.efJobId">
       <div>
         {{
           "JobId: " +
@@ -63,7 +63,21 @@
           ". Models" +
           job.models
         }}
-        <button type="button" v-on:click="addModelToggle()">Add Model To Job</button>
+        <div v-if="$store.state.AddModelToJob && CurrentlyEdited == job.efJobId">
+          <div>
+            <button type="button" v-on:click="addModelToJob()">
+              Add model
+            </button>
+          </div>
+          <button type="button" v-on:click="addModelToJobToggle(null)">
+            Cancel
+          </button>
+        </div>
+        <div v-else>
+          <button type="button" v-on:click="addModelToJobToggle(job.efJobId)">
+            Add Model To Job
+          </button>
+        </div>
         <button type="button" v-on:click="deleteJob(job.efJobId)">
           Delete Job
         </button>
@@ -73,7 +87,7 @@
 </template>
 
 <script>
-import {API_URL} from "./../globals"
+import { API_URL } from "./../globals";
 import store from "../Store/Store";
 export default {
   name: "Job",
@@ -84,20 +98,21 @@ export default {
         startDate: "",
         days: 0,
         location: "",
-        comments: ""
+        comments: "",
       },
       Jobs: [],
+      CurrentlyEdited: null,
     };
   },
   store,
   updated: function () {
-    this.$nextTick(this.GetJobs());
+    this.GetJobs();
   },
   created() {
     this.RefreshJobState();
   },
   watch: {
-    $route: 'RefreshJobState'
+    $route: "RefreshJobState",
   },
   methods: {
     RefreshJobState() {
@@ -137,7 +152,7 @@ export default {
           startDate: this.input.startDate,
           days: this.input.days,
           location: this.input.location,
-          comments: this.input.comments
+          comments: this.input.comments,
         };
 
         let response = await fetch(url, {
@@ -193,6 +208,11 @@ export default {
     },
     addJobToggle() {
       this.$store.commit("ToggleAddJob");
+      return;
+    },
+    addModelToJobToggle(id) {
+      this.$store.commit("ToggleAddModelToJob");
+      this.CurrentlyEdited == id;
       return;
     },
   },
