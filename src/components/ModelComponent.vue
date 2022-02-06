@@ -122,7 +122,6 @@
           v-model="input.Password"
           placeholder="Password"
         />
-
         <b-button class="manbutton" type="b-button" v-on:click="addModel()"
           >Confirm</b-button
         >
@@ -181,7 +180,7 @@ import { API_URL } from "./../globals";
 import store from "../Store/Store.ts";
 import ModelCard from "./cards/ModelCard.vue";
 export default {
-  name: "Model",
+  name: "ModelComponent",
   components: { ModelCard },
   data() {
     return {

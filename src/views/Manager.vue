@@ -12,10 +12,11 @@ import ManagerComponent from '../components/ManagerComponent';
 import ModelComponent from '../components/ModelComponent';
 import JobComponent from '../components/JobComponent';
 export default {
-  components: {
-      ManagerComponent,
-      ModelComponent,
-      JobComponent,
+    name: "ManagerView",
+    components: {
+        ManagerComponent,
+        ModelComponent,
+        JobComponent,
   }
 }
 </script>

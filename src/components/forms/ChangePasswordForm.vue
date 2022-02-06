@@ -32,7 +32,7 @@
 import { API_URL } from "../../globals";
 import router from "../../router/index";
 export default {
-  name: "ChangePassword",
+  name: "ChangePasswordComponent",
   data() {
     return {
       form: {

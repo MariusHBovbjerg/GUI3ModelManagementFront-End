@@ -9,9 +9,10 @@
 import JobComponent from '../components/JobComponent';
 import Expenses from './Expenses';
 export default {
-  components: {
-      JobComponent,
-      Expenses
+    name: "ModelView",
+    components: {
+        JobComponent,
+        Expenses
   }
 }
 </script>

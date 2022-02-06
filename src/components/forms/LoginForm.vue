@@ -26,7 +26,7 @@ import { API_URL } from "../../globals";
 import router from "../../router/index";
 
 export default {
-  name: "Login",
+  name: "LoginForm",
   data() {
     return {
       form: {

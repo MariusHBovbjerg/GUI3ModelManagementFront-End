@@ -42,7 +42,6 @@
           v-model="input.comments"
           placeholder="Comments"
         />
-
         <b-button
           class="jobbutton"
           type="b-button cardButton"
@@ -91,7 +90,7 @@ import store from "../Store/Store";
 import JobCard from "./cards/JobCard.vue";
 export default {
   components: { JobCard },
-  name: "Job",
+  name: "JobComponent",
   data() {
     return {
       input: {

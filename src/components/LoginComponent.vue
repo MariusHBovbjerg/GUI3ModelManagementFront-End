@@ -1,9 +1,7 @@
 <template>
-
     <div v-if="this.$store.state.LoggedIn">
         <h1>Welcome!</h1>
         <div>
-
             <b-form-input required type="text" name="email" v-model="input.email" placeholder="Email" />
             <b-form-input required type="password" name="password" v-model="input.password" placeholder="New Password" />
             <b-form-input required type="password" name="oldpassword" v-model="input.oldpassword" placeholder="Old Password" />
@@ -25,7 +23,7 @@
 import {API_URL} from "./../globals"
     import store from '../Store/Store.ts';
     export default {
-        name: 'Login',
+        name: 'LoginComponent',
         data() {
             return {
                 input: {
@@ -128,11 +126,4 @@ import {API_URL} from "./../globals"
             },
         }
     }
-    
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-    
-</style>
-

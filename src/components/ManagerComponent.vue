@@ -81,7 +81,7 @@ import { API_URL } from "./../globals";
 import store from "../Store/Store.ts";
 import ManagerCard from "./cards/ManagerCard.vue";
 export default {
-  name: "Manager",
+  name: "ManagerComponent",
   components: { ManagerCard },
   data() {
     return {

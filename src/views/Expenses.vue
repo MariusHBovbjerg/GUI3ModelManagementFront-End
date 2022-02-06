@@ -14,6 +14,7 @@ import { API_URL } from "../globals";
 import ExpenseForm from "../components/forms/ExpenseForm"
 import Vue from "vue";
 export default Vue.extend({
+  name: "ExpensesView",
   components: {
     ExpenseForm
   },
